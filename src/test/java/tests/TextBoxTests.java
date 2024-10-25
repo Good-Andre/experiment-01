@@ -1,10 +1,11 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.*;
 //import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 //import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Condition.text;
@@ -12,14 +13,22 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxTests {
+    WebDriver driver;
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = "firefox";
+//        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().setup();
+//        Configuration.browser = "firefox";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
 //        Configuration.holdBrowserOpen = true;
         Configuration.timeout = 5000; // default 4000
+    }
+
+    @BeforeEach
+    void setupTest() {
+        driver = new ChromeDriver();
     }
 
     @Test
@@ -42,8 +51,14 @@ public class TextBoxTests {
         $("#output #permanentAddress").shouldHave(text("Another street 1"));
     }
 
+
+    @AfterEach
+    void teardown() {
+        driver.quit();
+    }
+
     @AfterAll
     static void afterAll() {
-        closeWebDriver();
+//        closeWebDriver();
     }
 }
