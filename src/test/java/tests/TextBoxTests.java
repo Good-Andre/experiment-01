@@ -1,7 +1,9 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 //import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +19,7 @@ public class TextBoxTests {
 
     @BeforeAll
     static void beforeAll() {
+        SelenideLogger.addListener("allure-selenide", new AllureSelenide());
 //        WebDriverManager.firefoxdriver().setup();
         WebDriverManager.chromedriver().setup();
 //        Configuration.browser = "firefox";
