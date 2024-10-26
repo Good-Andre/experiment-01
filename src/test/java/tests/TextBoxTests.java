@@ -24,8 +24,8 @@ public class TextBoxTests extends TestBase {
             $("#userEmail").setValue("andy@email.ru");
             $("#currentAddress").setValue("Some street 1");
             $("#permanentAddress").setValue("Another street 1");
-//            $("#submit").scrollIntoView(true).click();
-            $("#submit").click();
+            $("#submit").scrollIntoView(true).click();
+//            $("#submit").click();
         });
 
         step("Verify results", () -> {
