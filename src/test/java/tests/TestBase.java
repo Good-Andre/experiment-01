@@ -23,7 +23,7 @@ public class TestBase {
         Configuration.pageLoadStrategy = "eager";
 //        Configuration.holdBrowserOpen = true;
         Configuration.timeout = 5000; // default 4000
-        Configuration.browserSize = "1920x1080";
+//        Configuration.browserSize = "1920x1080";
         // for selenoid
 //        Configuration.remote = "http://user1:1234@selenoid.autotest.cloud/wd/hub";
     }
