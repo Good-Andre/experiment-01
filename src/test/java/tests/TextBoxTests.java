@@ -13,13 +13,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 
 public class TextBoxTests {
     WebDriver driver;
 
     @BeforeAll
     static void beforeAll() {
-        SelenideLogger.addListener("allure-selenide", new AllureSelenide());
 //        WebDriverManager.firefoxdriver().setup();
         WebDriverManager.chromedriver().setup();
 //        Configuration.browser = "firefox";
@@ -27,31 +27,40 @@ public class TextBoxTests {
         Configuration.pageLoadStrategy = "eager";
 //        Configuration.holdBrowserOpen = true;
         Configuration.timeout = 5000; // default 4000
+        // for selenoid
+//        Configuration.remote = "http://user1:1234@selenoid.autotest.cloud/wd/hub";
     }
 
     @BeforeEach
     void setupTest() {
         driver = new ChromeDriver();
+        SelenideLogger.addListener("allure-selenide", new AllureSelenide());
     }
 
     @Test
     void fillFormTest() {
         String userName = "Alex Egorov";
 
-        open("/text-box");
-        $("h1.text-center").shouldHave(text("Text Box"));
+        step("Open form", () -> {
+            open("/text-box");
+            $("h1.text-center").shouldHave(text("Text Box"));
+        });
 
-        $("#userName").setValue(userName);
-        $("#userEmail").setValue("andy@email.ru");
-        $("#currentAddress").setValue("Some street 1");
-        $("#permanentAddress").setValue("Another street 1");
-        $("#submit").scrollIntoView(true).click();
+        step("Fill form", () -> {
+            $("#userName").setValue(userName);
+            $("#userEmail").setValue("andy@email.ru");
+            $("#currentAddress").setValue("Some street 1");
+            $("#permanentAddress").setValue("Another street 1");
+            $("#submit").scrollIntoView(true).click();
+        });
 
-        $("#output").shouldBe(visible);
-        $("#output").$("#name").shouldHave(text(userName));
-        $("#output #email").shouldHave(text("andy@email.ru"));
-        $("#output #currentAddress").shouldHave(text("Some street 1"));
-        $("#output #permanentAddress").shouldHave(text("Another street 1"));
+        step("Verify results", () -> {
+            $("#output").shouldBe(visible);
+            $("#output").$("#name").shouldHave(text(userName));
+            $("#output #email").shouldHave(text("andy@email.ru"));
+            $("#output #currentAddress").shouldHave(text("Some street 1"));
+            $("#output #permanentAddress").shouldHave(text("Another street 1"));
+        });
     }
 
 
@@ -60,8 +69,8 @@ public class TextBoxTests {
         driver.quit();
     }
 
-    @AfterAll
-    static void afterAll() {
+//    @AfterAll
+//    static void afterAll() {
 //        closeWebDriver();
-    }
+//    }
 }

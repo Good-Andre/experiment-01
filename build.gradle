@@ -44,3 +44,9 @@ tasks.register('simple_tests', Test) {
         includeTags("simple")
     }
 }
+
+tasks.register('remote_tests', Test) {
+    useJUnitPlatform {
+        includeTags("remote")
+    }
+}
